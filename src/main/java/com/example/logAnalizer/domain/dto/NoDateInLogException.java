@@ -1,4 +1,4 @@
-package com.example.logAnalizer.model;
+package com.example.logAnalizer.domain.dto;
 
 public class NoDateInLogException extends Exception{
 }

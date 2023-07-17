@@ -1,5 +1,5 @@
-package com.example.logAnalizer.fileoperations;
-import com.example.logAnalizer.model.LogDto;
+package com.example.logAnalizer.domain.logic;
+import com.example.logAnalizer.domain.dto.LogDto;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -12,13 +12,8 @@ import java.util.Map;
 public class FileOperator {
     public  String readFileToString(String filePath) throws IOException {
         byte[] encodedBytes = Files.readAllBytes(Path.of(filePath));
-        return new String(encodedBytes, StandardCharsets.UTF_8);
+        return  ByteArrayToSringConvecter.convert(encodedBytes);
     }
-    private static void saveToFile(Map<String , List<LogDto>> gruppedLogs){//todo need check
-
-
-    }
-
 
 }
 
