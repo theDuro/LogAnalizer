@@ -7,6 +7,7 @@ import com.example.logAnalizer.domain.enity.LogStructure;
 import com.example.logAnalizer.domain.mapper.LogMapMapper;
 import com.example.logAnalizer.domain.mapper.LogStructureMapper;
 import com.example.logAnalizer.service.LogsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +21,7 @@ import java.util.Map;
 @RestController
 public class LogControler {
     private final LogsService logsService;
+    @Autowired
     public LogControler(LogsService logsService) {
         this.logsService = logsService;
     }
@@ -78,6 +80,28 @@ public class LogControler {
         List<LogDto> logsDto =logsService.getLogsByDate(date);
         return new ResponseEntity<>(logsDto, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/dates")
+    public ResponseEntity<List<Date>> getDate() {
+        List<Date> dates =logsService.getAlDate();
+        return new ResponseEntity<>(dates, HttpStatus.OK);
+    }
+    @GetMapping(value = "/dates/{id}")
+    public ResponseEntity<List<Date>> getDateBYId(@PathVariable("id")long id) {
+        List<Date> dates =logsService.getDateByStructId(id);
+        return new ResponseEntity<>(dates, HttpStatus.OK);
+    }
+    @GetMapping(value = "/error_name")
+    public ResponseEntity<List<String>> getAllClasses() {
+        List<String> errors = logsService.getClassesNames();
+        return new ResponseEntity<>(errors, HttpStatus.OK);
+    }
+    @GetMapping(value = "/dates_error/{error}")
+    public ResponseEntity<List<Date>> getDateBYId(@PathVariable("error")String error) {
+        List<Date> dates =logsService.getDateByStructErrorName(error);
+        return new ResponseEntity<>(dates, HttpStatus.OK);
+    }
+    /////////////////////////////////////////////
     @PostMapping("/binary")
     public ResponseEntity<List<LogStructure>> saveFromBinaryArray(@RequestBody byte[] bytes) {
         List<LogStructure> savedLogStructures = logsService.saveFromBinaryArray(bytes);
@@ -100,6 +124,8 @@ public class LogControler {
         LogStructure savedLogStructure = logsService.saveLogStructure(logStructureDto);
         return ResponseEntity.ok(savedLogStructure);
     }
+
+
 
 
 

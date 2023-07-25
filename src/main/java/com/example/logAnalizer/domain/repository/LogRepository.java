@@ -18,7 +18,13 @@ public interface LogRepository extends JpaRepository<Log, Long> {
     List<Log> findByLogStructureId(@Param("structureId") Long structureId);
     @Query("SELECT l FROM Log l WHERE l.logDate = :date ")
     List<Log> findByLogDate(@Param("date") Date logDate);
+    @Query("SELECT DISTINCT l.logDate FROM Log l")
+    List<Date> getAllDates();
+
+    @Query("SELECT DISTINCT l.logDate FROM Log l WHERE l.logStructure.id = :structureId ")
+    List<Date> getDatesByStructureId(@Param("structureId") Long structureId);
     Log findById(long id);
+
 
 
 

@@ -76,9 +76,25 @@ public class LogsService {
     public List<LogDto> getLogsByIdAndDate(long id,Date date){
         Date actualDate = DataConvecter.convert(date);
         List<Log> logList = logRepository.findByLogStructureIdAndLogDate(id,actualDate);
-
         return LogMapper.toLogDtoList(logList);
     }
+    public List<Date> getAlDate(){
+        return logRepository.getAllDates();
+    }
+    public List<Date> getDateByStructId(long id){
+        return logRepository.getDatesByStructureId(id);
+    }
+    public List<Date> getDateByStructErrorName(String errorName){
+        long id = logStructureRepository.getIdFromErrorName(errorName);
+        return logRepository.getDatesByStructureId(id);
+    }
+
+    public List<String> getClassesNames(){
+        return logStructureRepository.getLogClasses();
+    }
+
+
+
 
 
 /////SAVE-------------------------------------------------------------------------------------------------------------
